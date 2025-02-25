@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { vapi, startAssistant, stopAssistant } from "./ai";
 import ActiveCallDetails from "./call/ActiveCallDetails";
+import "./App.css";
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -73,66 +74,89 @@ function App() {
 
   return (
     <div className="app-container">
-      {showForm && (
-        <>
-          <h1>Contact Details (Required)</h1>
-          <input
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            className="input-field"
-            onChange={handleInputChange(setFirstName)}
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            className="input-field"
-            onChange={handleInputChange(setLastName)}
-          />
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            className="input-field"
-            onChange={handleInputChange(setEmail)}
-          />
-          <input
-            type="tel"
-            placeholder="Phone number"
-            value={phoneNumber}
-            className="input-field"
-            onChange={handleInputChange(setPhoneNumber)}
-          />
-          {!started && (
-            <button
-              onClick={handleStart}
-              disabled={!allFieldsFilled}
-              className="button"
-            >
-              Start Application Call
-            </button>
-          )}
-        </>
-      )}
-      {loadingResult && <p>Loading call details... please wait</p>}
-      {!loadingResult && callResult && (
-        <div className="call-result">
-          <p>
-            Qualified:{" "}
-            {callResult.analysis.structuredData.is_qualified.toString()}
-          </p>
-          <p>{callResult.summary}</p>
-        </div>
-      )}
-      {(loading || loadingResult) && <div className="loading"></div>}
-      {started && (
-        <ActiveCallDetails
-          assistantIsSpeaking={assistantIsSpeaking}
-          volumeLevel={volumeLevel}
-          endCallCallback={handleStop}
-        />
-      )}
+      <video className="background-video" autoPlay muted loop playsInline>
+        <source src="/vid.mp4" type="video/mp4" />
+      </video>
+      <div className="gradient-background">
+        <nav className="navbar">
+          <div className="logo">AI Voice Agent</div>
+          <div className="nav-links">
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+
+        <main className="main-content">
+          <section className="hero-section">
+            <h1 className="gradient-text">AI Voice Assistant</h1>
+            <p className="subtitle">Experience the future of conversation</p>
+          </section>
+
+          <section className="call-section">
+            {showForm && (
+              <>
+                <h1>Contact Details (Required)</h1>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  className="input-field"
+                  onChange={handleInputChange(setFirstName)}
+                />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  value={lastName}
+                  className="input-field"
+                  onChange={handleInputChange(setLastName)}
+                />
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  value={email}
+                  className="input-field"
+                  onChange={handleInputChange(setEmail)}
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone number"
+                  value={phoneNumber}
+                  className="input-field"
+                  onChange={handleInputChange(setPhoneNumber)}
+                />
+                {!started && (
+                  <button
+                    onClick={handleStart}
+                    disabled={!allFieldsFilled}
+                    className="button"
+                  >
+                    Start Application Call
+                  </button>
+                )}
+              </>
+            )}
+            {loadingResult && <p>Loading call details... please wait</p>}
+            {!loadingResult && callResult && (
+              <div className="call-result">
+                <p>
+                  Qualified:{" "}
+                  {callResult.analysis.structuredData.is_qualified.toString()}
+                </p>
+                <p>{callResult.summary}</p>
+              </div>
+            )}
+            {(loading || loadingResult) && <div className="loading"></div>}
+            {started && (
+              <ActiveCallDetails
+                assistantIsSpeaking={assistantIsSpeaking}
+                volumeLevel={volumeLevel}
+                endCallCallback={handleStop}
+              />
+            )}
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
