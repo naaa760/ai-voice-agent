@@ -4,6 +4,7 @@
 
 
 A modern web application that enables interactive voice conversations with an AI assistant, featuring real-time feedback and conversation analysis.
+This web application allows users to have voice conversations with an AI assistant. Users enter their contact details, start a voice call, see real-time feedback during the discussion (AI speaking status and volume levels), and receive a qualification result and conversation summary after the call ends. It's a platform for automated AI voice interactions with visual feedback.
 
 ## ✨ Features
 
